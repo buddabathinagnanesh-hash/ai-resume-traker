@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Job Tracker & Matcher</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation/Header -->
+        <header class="glass-header">
+            <div class="logo">
+                <span class="icon">🚀</span>
+                <h1>Job<span class="highlight">Flow</span> AI</h1>
+            </div>
+            <nav>
+                <button class="nav-btn active" onclick="switchTab('tracker')">Application Tracker</button>
+                <button class="nav-btn" onclick="switchTab('matcher')">Resume Matcher</button>
+            </nav>
+        </header>
+
+        <!-- Tracker View -->
+        <main id="tracker-view" class="view-section active">
+            <div class="content-grid">
+                <!-- Add Application Form -->
+                <section class="card form-card">
+                    <h2>Track New Job</h2>
+                    <form id="add-job-form">
+                        <div class="form-group">
+                            <label>Company</label>
+                            <input type="text" id="company" placeholder="e.g. Google" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Role</label>
+                            <input type="text" id="role" placeholder="e.g. Backend Engineer" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Date Applied</label>
+                            <input type="date" id="date_applied">
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="status">
+                                <option value="Applied">Applied</option>
+                                <option value="Interviewing">Interviewing</option>
+                                <option value="Offer">Offer</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Notes</label>
+                            <textarea id="notes" rows="2" placeholder="Referral by Alice..."></textarea>
+                        </div>
+                        <button type="submit" class="cta-btn">Add Application</button>
+                    </form>
+                </section>
+
+                <!-- Applications List -->
+                <section class="card list-card">
+                    <h2>Your Applications</h2>
+                    <div class="table-container">
+                        <table id="jobs-table">
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- JS will populate this -->
+                                <tr class="empty-state">
+                                    <td colspan="5">Loading applications...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Matcher View -->
+        <main id="matcher-view" class="view-section">
+            <div class="matcher-container">
+                <div class="input-side">
+                    <section class="card">
+                        <h2>1. Paste Resume</h2>
+                        <textarea id="resume-text" placeholder="Paste your full resume text here..."></textarea>
+                    </section>
+                    <section class="card">
+                        <h2>2. Paste Job Description</h2>
+                        <textarea id="jd-text" placeholder="Paste the job description here..."></textarea>
+                    </section>
+                    <button onclick="analyzeMatch()" class="cta-btn large-btn">✨ Analyze Match</button>
+                </div>
+                
+                <div class="result-side">
+                    <section class="card result-card" id="result-card" style="display: none;">
+                        <h2>Match Analysis</h2>
+                        
+                        <div class="score-container">
+                            <div class="score-circle">
+                                <svg>
+                                    <circle cx="70" cy="70" r="70"></circle>
+                                    <circle cx="70" cy="70" r="70" id="score-ring"></circle>
+                                </svg>
+                                <div class="score-number">
+                                    <span id="match-score">0</span>%
+                                </div>
+                            </div>
+                            <p class="score-label">Match Score</p>
+                        </div>
+
+                        <div class="keywords-box">
+                            <h3>⚠️ Missing Keywords</h3>
+                            <div id="missing-keywords" class="chips-container">
+                                <!-- Chips go here -->
+                            </div>
+                        </div>
+
+                        <div class="keywords-box success">
+                            <h3>✅ Matched Keywords</h3>
+                            <div id="matched-keywords" class="chips-container">
+                                <!-- Chips go here -->
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="card placeholder-result" id="placeholder-result">
+                        <div class="icon-placeholder">📊</div>
+                        <p>Click "Analyze" to see how well your resume matches the job description.</p>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
